@@ -1,0 +1,97 @@
+$box-size: 100px;
+$step-height: 70px;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.navigation {
+    color: white;
+    position: relative;
+    width: 350px;
+    height: $step-height;
+    background: linear-gradient(145deg, #303030, #2b2b2b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 5px 5px 10px #212121,
+            -5px -5px 10px #3f3f3f;
+}
+.navigation ul {
+    display: flex;
+    width: 300px;
+}
+.navigation ul li {
+    position: relative;
+    list-style: none;
+    width: $box-size;
+    height: $step-height;
+    z-index: 1;
+}
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+.navigation ul li a .icon {
+    position: relative;
+    display: block;
+    line-height: 75px;
+    font-size: 1.5em;
+    text-align: center;
+    transition: 0.5s;
+    color: white;
+}
+
+.navigation ul li.active a .icon {
+    transform: translateY(-35px);
+}
+
+.navigation ul li a .text {
+    position: absolute;
+    color: white;
+    font-weight: 400;
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.navigation ul li.active a .text {
+    opacity: 1;
+    transform: translateY(10px);
+}
+
+.indicator {
+    position: absolute;
+    top: -50%;
+    width: 70px;
+    height: 70px;
+    background-color: #f9484a;
+    background-image: linear-gradient(315deg, #f9484a 0%, #fbd72b 74%);
+    box-shadow: 5px 5px 10px #212121,
+            -5px -5px 10px #3f3f3f;
+    border-radius: 50%;
+    border: 6px solid var(--main);
+    transition: .5s;
+}
+
+.navigation ul li:nth-child(1).active ~ .indicator {
+    transform: translateX(calc((#{$box-size} * 0) + 20%));
+}
+
+.navigation ul li:nth-child(2).active ~ .indicator {
+    transform: translateX(calc((#{$box-size} * 1) + 20%));
+}
+
+.navigation ul li:nth-child(3).active ~ .indicator {
+    transform: translateX(calc((#{$box-size} * 2) + 20%));
+}
