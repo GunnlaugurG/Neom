@@ -32,7 +32,6 @@ class Stockfish extends Component {
 
 	engineGame = (options) => {
     	options = options || {};
-		let isCheckingBestMove = false
 		/// We can load Stockfish via Web Workers or via STOCKFISH() if loaded from a <script> tag.
 		let engine =
 		typeof STOCKFISH === "function"
@@ -50,11 +49,6 @@ class Stockfish extends Component {
 		let announced_game_over;
 		// do not pick up pieces if the game is over
     // only pick up pieces for White
-
-	const tempGetBestMove = () => {
-		isCheckingBestMove = true
-		prepareMove()
-	}
 	
     setInterval(function () {
       if (announced_game_over) {
@@ -128,11 +122,9 @@ class Stockfish extends Component {
     	stopClock();
       	// this.setState({ fen: game.fen() });
 		let turn = game.turn() === "w" ? "white" : "black";
-		console.log(2, isCheckingBestMove);
 		if (!game.isGameOver()) {
-		  console.log(3)
         // if (turn === playerColor) {
-		if ((turn !== playerColor) | (isCheckingBestMove = true)) {
+		if ((turn !== playerColor)) {
           // playerColor = playerColor === 'white' ? 'black' : 'white';
           uciCmd("position startpos moves" + get_moves());
           uciCmd("position startpos moves" + get_moves(), evaler);
@@ -200,16 +192,10 @@ class Stockfish extends Component {
         /// Did the AI move?
         if (match) {
           // isEngineRunning = false;
-			if (!isCheckingBestMove) {
-				console.log(isCheckingBestMove, 'bingo')
-				!isCheckingBestMove ? game.move({ from: match[1], to: match[2], promotion: match[3] }) : console.log('found best')
-				this.setState({ fen: game.fen() });
-				prepareMove();
-				uciCmd("eval", evaler);
-			}
-			else {
-				console.log('best move found')
-			}
+			game.move({ from: match[1], to: match[2], promotion: match[3] })
+			this.setState({ fen: game.fen() });
+			prepareMove();
+			uciCmd("eval", evaler);
 			//uciCmd("eval");
 			/// Is it sending feedback?
         } else if (
@@ -237,7 +223,6 @@ class Stockfish extends Component {
                 : ">= ") + engineStatus.score;
           }
 		  }
-		  isCheckingBestMove = false
 	}
       // displayStatus();
     };
@@ -253,16 +238,13 @@ class Stockfish extends Component {
       },
       prepareMove: function () {
         prepareMove();
-		},
-		checkBest: function () {
-		  tempGetBestMove()
-	  }
+		}
     };
   };
 
   render() {
 	  	const { fen, bestMove } = this.state;
-    	return this.props.children({ position: fen, onDrop: this.onDrop, getBestMove: this.engineGame().checkBest, bestMove: bestMove });
+    	return this.props.children({ position: fen, onDrop: this.onDrop, bestMove: bestMove });
   }
 }
 
