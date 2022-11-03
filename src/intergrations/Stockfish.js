@@ -7,7 +7,7 @@ const game = new Chess();
 
 class Stockfish extends Component {
   static propTypes = { children: PropTypes.func };
-	state = { fen: "start", bestMove: []};
+	state = { fen: "start", bestMove: [], engineScore: 0};
 	componentDidMount() {
     	this.setState({ fen: game.fen() });
 
@@ -18,7 +18,7 @@ class Stockfish extends Component {
     	// see if the move is legal
 		const move = game.move({
 			from: sourceSquare,
-			to: targetSquare
+			to: targetSquare,
 		});
 
     	// illegal move
@@ -65,7 +65,10 @@ class Stockfish extends Component {
 
       (which || engine).postMessage(cmd);
     }
-    uciCmd("uci");
+	uciCmd("uci");
+	uciCmd('setoption name Skill Level value 0')
+	uciCmd('setoption name Skill Level Probability value 10	')
+	uciCmd('setoption name Skill Level Maximum Error value 900')
 
     function clockTick() {
       let t =
@@ -221,30 +224,32 @@ class Stockfish extends Component {
               ((match[1] === "upper") === (game.turn() === "w")
                 ? "<= "
                 : ">= ") + engineStatus.score;
-          }
+			}
 		  }
+		  this.setState({engineScore: engineStatus.score})
 	}
       // displayStatus();
     };
 
     return {
-      start: function () {
-        uciCmd("ucinewgame");
-        uciCmd("isready");
-        engineStatus.engineReady = false;
-        engineStatus.search = null;
-        prepareMove();
-        announced_game_over = false;
-      },
-      prepareMove: function () {
-        prepareMove();
-		}
+		start: function () {
+			uciCmd("ucinewgame");
+			uciCmd("isready");
+			engineStatus.engineReady = false;
+			engineStatus.search = null;
+			prepareMove();
+			announced_game_over = false;
+		},
+		prepareMove: function () {
+			prepareMove();
+		},
+		engineStatus: engineStatus
     };
   };
 
   render() {
-	  	const { fen, bestMove } = this.state;
-    	return this.props.children({ position: fen, onDrop: this.onDrop, bestMove: bestMove });
+	  	const { fen, bestMove, engineScore } = this.state;
+    	return this.props.children({ position: fen, onDrop: this.onDrop, bestMove: bestMove, engineStatus: engineScore });
   }
 }
 

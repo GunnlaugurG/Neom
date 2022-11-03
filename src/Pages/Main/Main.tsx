@@ -22,18 +22,21 @@ const Main = () => {
   return (
     <div className={styles.container}>
       <Stockfish>
-        {({ position, onDrop, bestMove, getBestMove }: any) => {
+        {({ position, onDrop, bestMove, engineStatus }: any) => {
+          console.log("test", engineStatus);
           return (
-            <CustomChessBoard
-              customArrows={bestMove}
-              customBoardStyle={boardStyle}
-              position={position}
-              boardOrientation="black"
-              onPieceDrop={onDrop}
-              customDarkSquareStyle={darkSq}
-              customLightSquareStyle={lightSq}
-              findBestMove={getBestMove}
-            ></CustomChessBoard>
+            <>
+              <CustomChessBoard
+                customArrows={bestMove}
+                customBoardStyle={boardStyle}
+                position={position}
+                boardOrientation="black"
+                onPieceDrop={onDrop}
+                customDarkSquareStyle={darkSq}
+                customLightSquareStyle={lightSq}
+              ></CustomChessBoard>
+              <p>{engineStatus}</p>
+            </>
           );
         }}
       </Stockfish>
