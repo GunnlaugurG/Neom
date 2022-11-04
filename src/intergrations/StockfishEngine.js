@@ -41,7 +41,7 @@ function engineGame(options) {
                 status += ' Score: ' + engineStatus.score;
             }
         }
-        $.('#engineStatus').html(status);
+        //\$.('#engineStatus').html(status);
     }
 
     function displayClock(color, t) {

@@ -5,6 +5,7 @@ import styles from "./Main.module.scss";
 import Stockfish from "../../intergrations/Stockfish";
 import CustomChessBoard from "../../Components/CustomChessboard";
 import Button from "../../Components/Button/Button";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const lightSq = {
   background: "#bbbfcb",
@@ -19,27 +20,47 @@ const boardStyle = {
 };
 
 const Main = () => {
+  const [showMove, setShowMove] = useState(false);
+  const playerColor: "white" | "black" = "white";
+
+  const toogleSetMove = () => {
+    const temp = !showMove;
+    setShowMove(temp);
+    console.log(showMove);
+  };
   return (
     <div className={styles.container}>
-      <Stockfish>
-        {({ position, onDrop, bestMove, engineStatus }: any) => {
-          console.log("test", engineStatus);
+      <Stockfish playerColor={playerColor} test={showMove}>
+        {({ position, onDrop, bestMove, engineStatus, returning }: any) => {
+          console.log("returning", returning);
           return (
             <>
               <CustomChessBoard
-                customArrows={bestMove}
+                customArrows={showMove ? bestMove : []}
                 customBoardStyle={boardStyle}
                 position={position}
-                boardOrientation="black"
+                boardOrientation={playerColor}
                 onPieceDrop={onDrop}
                 customDarkSquareStyle={darkSq}
                 customLightSquareStyle={lightSq}
               ></CustomChessBoard>
-              <p>{engineStatus}</p>
+              <ProgressBar
+                labelAlignment={engineStatus < 0 ? "left" : "outside"}
+                bgColor="black"
+                completed={5 + engineStatus}
+                customLabel={engineStatus}
+                ariaValuemin={-20}
+                ariaValuemax={20}
+                baseBgColor="white"
+                dir="auto"
+              />
             </>
           );
         }}
       </Stockfish>
+      <Button onClick={toogleSetMove}>
+        <p>Show best move</p>
+      </Button>
     </div>
   );
 };

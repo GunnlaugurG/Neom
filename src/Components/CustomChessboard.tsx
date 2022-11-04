@@ -8,9 +8,9 @@ const CustomChessBoard: React.FC<IProps> = ({ ...rest }) => {
   return (
     <div>
       <Chessboard {...rest}></Chessboard>
-      <Button onClick={() => {}}>
+      {/* <Button onClick={() => {}}>
         <p>test</p>
-      </Button>
+      </Button> */}
     </div>
   );
 };

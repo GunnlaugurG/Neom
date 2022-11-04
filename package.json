@@ -2,10 +2,12 @@
   "name": "neom",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gunnlaugurg.github.io/Neom/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -29,6 +31,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -53,6 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@types/chess.js": "^0.13.4"
+    "@types/chess.js": "^0.13.4",
+    "gh-pages": "^4.0.0"
   }
 }
