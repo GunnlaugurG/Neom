@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Neom/static/css/main.9d36ebd5.css",
+    "main.js": "/Neom/static/js/main.b69906f9.js",
+    "static/js/787.502b9edd.chunk.js": "/Neom/static/js/787.502b9edd.chunk.js",
+    "index.html": "/Neom/index.html",
+    "main.9d36ebd5.css.map": "/Neom/static/css/main.9d36ebd5.css.map",
+    "main.b69906f9.js.map": "/Neom/static/js/main.b69906f9.js.map",
+    "787.502b9edd.chunk.js.map": "/Neom/static/js/787.502b9edd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9d36ebd5.css",
+    "static/js/main.b69906f9.js"
+  ]
+}
